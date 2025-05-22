@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "826302591187",
+    "project_id": "project-elif-spa",
+    "storage_bucket": "project-elif-spa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826302591187:android:64b0076971a9e91b526426",
+        "android_client_info": {
+          "package_name": "com.example.swiftpick_spa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd4V9StUsnSV60D4wOidEduhMa_VRouM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
