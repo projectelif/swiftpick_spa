@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:swiftpick_spa/auth/login_page.dart';
 import 'package:swiftpick_spa/components/mybutton.dart';
 import 'package:swiftpick_spa/pages/masor_page.dart';
 
@@ -78,11 +79,16 @@ class HomePage extends StatelessWidget {
                 },
               ),
               MyButton(
-                title: 'Profilim',
-                icondata: Icons.person,
+                title: 'Çıkış',
+                icondata: Icons.logout,
                 onTap: () {
-                  //FirebaseAuth.instance.signOut();
-                  Navigator.pop(context); // Giriş sayfasına geri döner
+                  FirebaseAuth.instance.signOut();
+                  //Navigator.pop(context); // Giriş sayfasına geri döner
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
                 },
               ),
             ],
