@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasData) {
             return HomePage(); // Giriş yapılmış
           } else {
-            return LoginPage(); // Giriş yapılmamış
+            return const LoginPage(); // Giriş yapılmamış
           }
         },
       ),

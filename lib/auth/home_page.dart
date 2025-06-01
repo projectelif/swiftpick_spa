@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                   height: 30,
                 ),
           Container(padding: const EdgeInsets.symmetric(horizontal: 30),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white),
           child: GridView.count(
             shrinkWrap: true,
