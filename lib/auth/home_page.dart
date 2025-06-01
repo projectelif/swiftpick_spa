@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:swiftpick_spa/auth/login_page.dart';
 import 'package:swiftpick_spa/components/mybutton.dart';
+import 'package:swiftpick_spa/pages/hizmet_page.dart';
 import 'package:swiftpick_spa/pages/masor_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -68,7 +69,11 @@ class HomePage extends StatelessWidget {
                 title: 'Hizmetler',
                 icondata: Icons.bed,
                 onTap: () {
-                  // Ayarlar sayfasına yönlendirme
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HizmetPage()),
+                            );
                 },
               ),
               MyButton(
