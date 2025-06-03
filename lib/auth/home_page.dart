@@ -4,6 +4,7 @@ import 'package:swiftpick_spa/auth/login_page.dart';
 import 'package:swiftpick_spa/components/mybutton.dart';
 import 'package:swiftpick_spa/pages/hizmet_page.dart';
 import 'package:swiftpick_spa/pages/masor_page.dart';
+import 'package:swiftpick_spa/pages/randevu_talep.dart';
 
 class HomePage extends StatelessWidget {
   final User? currentUser = FirebaseAuth.instance.currentUser;
@@ -13,11 +14,23 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SwiftPick SPA'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.background,
-      ),
+  title: const Text('SwiftPick SPA'),
+  centerTitle: true,
+  elevation: 0,
+  backgroundColor: Theme.of(context).colorScheme.background,
+  actions: [ // Buraya eklendi
+    IconButton(
+      icon: const Icon(Icons.logout), // Çıkış ikonu
+      onPressed: () {
+        FirebaseAuth.instance.signOut();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      },
+    ),
+  ],
+),
       body: Column(children: [
         Row(
           mainAxisAlignment:MainAxisAlignment.start,
@@ -77,10 +90,14 @@ class HomePage extends StatelessWidget {
                 },
               ),
               MyButton(
-                title: 'Randevular',
+                title: 'Randevu Talep',
                 icondata: Icons.calendar_month,
                 onTap: () {
-                  // Bildirimler sayfasına yönlendirme
+                   Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RandevuTalepPage()),
+                            );
                 },
               ),
               MyButton(
