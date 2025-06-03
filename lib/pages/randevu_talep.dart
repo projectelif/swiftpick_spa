@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RandevuTalepPage extends StatefulWidget {
   const RandevuTalepPage({super.key});
@@ -27,6 +30,10 @@ class _RandevuTalepPageState extends State<RandevuTalepPage> {
     'Farketmez',
   ];
 
+// Firestore ve Auth instance'ları
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -53,17 +60,34 @@ class _RandevuTalepPageState extends State<RandevuTalepPage> {
     }
   }
 
-  void _submitAppointmentRequest() {
-    // Randevu talep etme mantığı burada işlenecek
-    // Örneğin, seçilen verileri bir API'ye gönderebilirsiniz.
-    print('Masaj Tipi: $_selectedMassage');
-    print('Tarih: ${_selectedDate.toLocal().toString().split(' ')[0]}');
-    print('Saat: ${_selectedTime.format(context)}');
-    print('Masör Cinsiyeti: $_selectedTherapistGender');
+  Future<void> _submitAppointmentRequest() async {
+    final User? user = _auth.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lütfen giriş yapın!')),
+      );
+      return;
+    }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Randevu Talebiniz Alındı!')),
-    );
+    try {
+      await _firestore.collection('appointments').add({
+        'userId': user.uid, // Randevuyu talep eden kullanıcının UID'si
+        'massageType': _selectedMassage,
+        'appointmentDate': _selectedDate,
+        'appointmentTime': _selectedTime.format(context), // Saati string olarak kaydetmek daha kolay olabilir
+        'therapistGender': _selectedTherapistGender,
+        'timestamp': FieldValue.serverTimestamp(), // Randevu talep zamanı
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Randevu Talebiniz Alındı ve Kaydedildi!')),
+      );
+    } catch (e) {
+      print('Randevu kaydetme hatası: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Randevu kaydedilirken bir hata oluştu: $e')),
+      );
+    }
   }
 
   @override

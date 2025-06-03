@@ -4,6 +4,7 @@ import 'package:swiftpick_spa/auth/login_page.dart';
 import 'package:swiftpick_spa/components/mybutton.dart';
 import 'package:swiftpick_spa/pages/hizmet_page.dart';
 import 'package:swiftpick_spa/pages/masor_page.dart';
+import 'package:swiftpick_spa/pages/profile_page.dart';
 import 'package:swiftpick_spa/pages/randevu_talep.dart';
 
 class HomePage extends StatelessWidget {
@@ -101,15 +102,13 @@ class HomePage extends StatelessWidget {
                 },
               ),
               MyButton(
-                title: 'Çıkış',
-                icondata: Icons.logout,
+                title: 'Profilim',
+                icondata: Icons.person,
                 onTap: () {
-                  FirebaseAuth.instance.signOut();
-                  //Navigator.pop(context); // Giriş sayfasına geri döner
                   Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
+                                  builder: (context) => ProfilePage()),
                             );
                 },
               ),

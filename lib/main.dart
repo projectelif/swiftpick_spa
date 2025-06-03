@@ -4,6 +4,7 @@ import 'package:swiftpick_spa/auth/home_page.dart';
 import 'package:swiftpick_spa/auth/login_page.dart';
 import 'firebase_options.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator(); // Yükleme göstergesi
+          }
           if (snapshot.hasData) {
             return HomePage(); // Giriş yapılmış
           } else {
