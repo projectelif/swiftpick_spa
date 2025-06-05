@@ -51,11 +51,11 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 const SizedBox(height: 60),
-                Image.asset('assets/logo.png', height: 60), // Cignifi logosu
+                Image.asset('assets/logo.png', height: 80), // Cignifi logosu
                 const SizedBox(height: 24),
                 const Text(
                   "Login to your Account",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(height: 24),
                 TextField(
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : _signIn,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF002D72),
+                    backgroundColor: const Color(0xFF096B68),
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: _isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Sign in"),
+                      : const Text("Sign in", style: TextStyle(fontSize: 18, color: Colors.white)),
                 ),
                 const SizedBox(height: 24),
                 const Text("- Or sign in with -"),
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                       MaterialPageRoute(builder: (_) => const SignUpPage()),
                     );
                   },
-                  child: const Text("Don't have an account? Sign up"),
+                  child: const Text("Don't have an account? Sign up", style: TextStyle(fontSize: 16),),
                 )
               ],
             ),
