@@ -59,15 +59,15 @@ class _MasorPageState extends State<MasorPage> {
                     color: Colors.grey.shade200,
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(
+                      const BoxShadow(
                         color: Colors.black12,
                         blurRadius: 6,
                         offset: Offset(0, 2),
                       ),
                     ],
                   ),
-                  padding: EdgeInsets.all(10),
-                  child: Icon(Icons.arrow_back),
+                  padding: const EdgeInsets.all(10),
+                  child: const Icon(Icons.arrow_back),
                 ),
               ),
             ),
@@ -132,9 +132,9 @@ class UserProfilePage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10),
-              Center(child: Text( user.name , style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold))),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+              Center(child: Text( user.name , style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold))),
+              const SizedBox(height: 10),
               Text(user.info),
             ],
           ),

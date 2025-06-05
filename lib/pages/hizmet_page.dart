@@ -64,7 +64,7 @@ class _HizmetPageState extends State<HizmetPage> {
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     shape: BoxShape.circle,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black12,
                         blurRadius: 6,
@@ -86,8 +86,8 @@ class _HizmetPageState extends State<HizmetPage> {
                 children: List.generate(massages.length, (index) {
                   bool isActive = index == _currentPage;
                   return AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    margin: EdgeInsets.symmetric(horizontal: 6),
+                    duration: const Duration(milliseconds: 300),
+                    margin: const EdgeInsets.symmetric(horizontal: 6),
                     width: isActive ? 14 : 8,
                     height: 8,
                     decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class UserProfilePage extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.black,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (_) => YoutubeVideoBottomSheet(videoId: videoId),
@@ -144,14 +144,14 @@ class UserProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Center(
             child: Text(
               user.name,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(user.info),
         ],
       ),
@@ -198,20 +198,20 @@ class _YoutubeVideoBottomSheetState extends State<YoutubeVideoBottomSheet> {
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.5,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             YoutubePlayer(
               controller: _controller,
               showVideoProgressIndicator: true,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton.icon(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.close),
-                label: Text('Kapat'),
+                icon: const Icon(Icons.close),
+                label: const Text('Kapat'),
               ),
             ),
           ],

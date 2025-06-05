@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
 
 class RandevuTalepPage extends StatefulWidget {
   const RandevuTalepPage({super.key});
@@ -60,6 +60,35 @@ class _RandevuTalepPageState extends State<RandevuTalepPage> {
     }
   }
 
+  // Randevu bilgilerini takvime ekleme fonksiyonu
+  void _addAppointmentToCalendar() {
+    // Seçilen tarih ve saati bir DateTime objesinde birleştir
+    final DateTime eventDateTime = DateTime(
+      _selectedDate.year,
+      _selectedDate.month,
+      _selectedDate.day,
+      _selectedTime.hour,
+      _selectedTime.minute,
+    );
+
+    final Event event = Event(
+      title: 'SwiftPick SPA - $_selectedMassage Randevusu',
+      description: 'Masör Cinsiyeti: $_selectedTherapistGender. Not: Lütfen randevu saatinden 10 dakika önce hazır bulunun.',
+      location: 'SwiftPick SPA Merkezi', // İsteğe bağlı olarak konum ekleyebilirsiniz
+      startDate: eventDateTime,
+      endDate: eventDateTime.add(const Duration(minutes: 60)), // Varsayılan olarak 60 dakikalık bir randevu
+      // İsteğe bağlı olarak daha fazla özellik ekleyebilirsiniz:
+      // allDay: false,
+      // iosParams: IOSParams(...),
+      // androidParams: AndroidParams(...),
+    );
+
+    Add2Calendar.addEvent2Cal(event);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Randevu takviminize eklendi!')),
+    );
+  }
+
   Future<void> _submitAppointmentRequest() async {
     final User? user = _auth.currentUser;
     if (user == null) {
@@ -69,25 +98,65 @@ class _RandevuTalepPageState extends State<RandevuTalepPage> {
       return;
     }
 
+    // Gerekli tüm alanların seçili olup olmadığını kontrol edin
+    if (_selectedMassage == null || _selectedTherapistGender == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lütfen tüm alanları doldurun.')),
+      );
+      return;
+    }
+
     try {
       await _firestore.collection('appointments').add({
-        'userId': user.uid, // Randevuyu talep eden kullanıcının UID'si
+        'userId': user.uid,
         'massageType': _selectedMassage,
         'appointmentDate': _selectedDate,
-        'appointmentTime': _selectedTime.format(context), // Saati string olarak kaydetmek daha kolay olabilir
+        'appointmentTime': _selectedTime.format(context),
         'therapistGender': _selectedTherapistGender,
-        'timestamp': FieldValue.serverTimestamp(), // Randevu talep zamanı
+        'timestamp': FieldValue.serverTimestamp(),
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Randevu Talebiniz Alındı ve Kaydedildi!')),
       );
+
+      // Randevu başarıyla kaydedildikten sonra kullanıcıya sor
+      _showCalendarAddDialog();
+
     } catch (e) {
       print('Randevu kaydetme hatası: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Randevu kaydedilirken bir hata oluştu: $e')),
       );
     }
+  }
+
+  // Takvime ekleme sorusu soran AlertDialog
+  void _showCalendarAddDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Takvime Ekle?'),
+          content: const Text('Randevuyu telefon takviminize eklemek ister misiniz?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Hayır'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Diyalogu kapat
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Evet'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Diyalogu kapat
+                _addAppointmentToCalendar(); // Takvime ekleme işlemini başlat
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

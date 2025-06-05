@@ -157,10 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Icon(_isEditing ? Icons.save : Icons.edit), // Düzenleme moduna göre ikon değişir
             onPressed: _toggleEditMode,
           ),
-          IconButton(
-            icon: const Icon(Icons.logout), // Çıkış butonu
-            onPressed: _logout,
-          ),
+
         ],
       ),
       body: SingleChildScrollView(
